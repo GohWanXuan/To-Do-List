@@ -1,28 +1,30 @@
+"use strict";
+
 // ADD BUTTON EVENT LISTENER 
-var todoList = document.querySelector("#todo-list")!;
-var addButton = document.querySelector("#add")!;
-var task = document.querySelector<HTMLInputElement>("#inputfield")!;
+var todoList = document.querySelector("#todo-list");
+var addButton = document.querySelector("#add");
+var task = document.querySelector("#inputfield");
 
 task.addEventListener("keypress", addTask);
 addButton.addEventListener("click", addTaskToToDoList);
 
 // ADD TASK TO TO DO LIST
-function addTaskToToDoList(): void {
-    if(task.value.length > 0) {
-        let newTask = document.createElement("li");
+function addTaskToToDoList() {
+    if (task.value.length > 0) {
+        var newTask = document.createElement("li");
 
-        let checkbox = document.createElement("input");
+        var checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.className = "todo-check";
         checkbox.addEventListener("click", tickDoneOnToDoList);
         newTask.appendChild(checkbox);
 
-        let finalTask = document.createElement("label");
+        var finalTask = document.createElement("label");
         finalTask.appendChild(document.createTextNode(task.value));
         finalTask.className = "todo";
         newTask.appendChild(finalTask);
 
-        let newDeleteButton = document.createElement("button");
+        var newDeleteButton = document.createElement("button");
         newDeleteButton.appendChild(document.createTextNode("delete"));
         newDeleteButton.className = "btn btn-outline-warning";
         newDeleteButton.setAttribute("id", "delete");
@@ -31,15 +33,15 @@ function addTaskToToDoList(): void {
 
         newTask.appendChild(document.createElement("BR"));
         newTask.appendChild(document.createElement("BR"));
-        
+
         todoList.appendChild(newTask);
         task.value = "";
     }
 }
 
 // ADD TASK TO TO DO LIST WHEN USER PRESS ENTER
-function addTask(event: KeyboardEvent): void {
-    if(event.which === 13) {
+function addTask(event) {
+    if (event.which === 13) {
         addTaskToToDoList();
     }
 }
@@ -47,25 +49,25 @@ function addTask(event: KeyboardEvent): void {
 // DONE BUTTON EVENT LISTENER 
 var doneButton = todoList.querySelectorAll(".todo-check");
 
-for(let i = 0; i < doneButton.length; i++) {
+for (var i = 0; i < doneButton.length; i++) {
     doneButton[i].addEventListener("click", tickDoneOnToDoList);
 }
 
 // TICK DONE FOR A TASK IN THE TO DO LIST
-function tickDoneOnToDoList(event: Event): void {
-    let checkboxElement = event.srcElement!;
-    let parent = checkboxElement.parentElement!;
-    parent!.querySelector(".todo")!.classList.toggle("done");
+function tickDoneOnToDoList(event) {
+    var checkboxElement = event.srcElement;
+    var parent = checkboxElement.parentElement;
+    parent.querySelector(".todo").classList.toggle("done");
 }
 
 // DELETE BUTTON EVENT LISTENER 
 var deleteButton = document.querySelectorAll("#delete");
 
-for(let i = 0; i < deleteButton.length; i++) {
+for (var i = 0; i < deleteButton.length; i++) {
     deleteButton[i].addEventListener("click", deleteTaskFromToDoList);
 }
 
-// DELETE A TASK FROM THE TO DO LIST
-function deleteTaskFromToDoList(event: Event): void {
-    event.srcElement!.parentElement!.remove();
+// DELETE AN ITEM FROM THE TO DO LIST
+function deleteTaskFromToDoList(event) {
+    event.srcElement.parentElement.remove();
 }
