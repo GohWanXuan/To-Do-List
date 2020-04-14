@@ -1,10 +1,10 @@
 // ADD BUTTON EVENT LISTENER 
-var todoList = document.querySelector("#todo-list")!;
-var addButton = document.querySelector("#add")!;
-var task = document.querySelector<HTMLInputElement>("#inputfield")!;
+var todoList = document.querySelector("#todo-list")!; 
+var addButton = document.querySelector("#add")!; 
+var task = document.querySelector<HTMLInputElement>("#inputfield")!; 
 
-task.addEventListener("keypress", addTask);
-addButton.addEventListener("click", addTaskToToDoList);
+task.addEventListener("keypress", addTask);  
+addButton.addEventListener("click", addTaskToToDoList); 
 
 // ADD TASK TO TO DO LIST
 function addTaskToToDoList(): void {
@@ -53,7 +53,7 @@ for(let i = 0; i < doneButton.length; i++) {
 
 // TICK DONE FOR A TASK IN THE TO DO LIST
 function tickDoneOnToDoList(event: Event): void {
-    let checkboxElement = event.srcElement!;
+    let checkboxElement = ( <HTMLElement>event.target );
     let parent = checkboxElement.parentElement!;
     parent!.querySelector(".todo")!.classList.toggle("done");
 }
@@ -67,5 +67,5 @@ for(let i = 0; i < deleteButton.length; i++) {
 
 // DELETE A TASK FROM THE TO DO LIST
 function deleteTaskFromToDoList(event: Event): void {
-    event.srcElement!.parentElement!.remove();
+    ( <HTMLElement>event.target ).parentElement!.remove();
 }
