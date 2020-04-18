@@ -1,3 +1,36 @@
+// CLASSES
+class Task {
+    text : string;
+
+    constructor(text : string){
+        this.text = text; 
+    }
+}
+
+class NormalTask extends Task {
+    checkbox : boolean; 
+
+    constructor(text : string, checkbox : boolean) {
+        super(text); 
+        this.checkbox = checkbox; 
+    }
+}
+
+class CatTask extends Task { 
+    url : string; 
+
+    constructor(text : string, url : string) {
+        super(text); 
+        this.url = url;
+    }
+}
+
+// CHECK IF TASK HAS "cat"
+function isCat(text: string) {
+    text = text.toLowerCase();
+    return text.indexOf("cat") != -1; 
+}
+
 // ADD BUTTON EVENT LISTENER 
 var todoList = document.querySelector("#todo-list")!; 
 var addButton = document.querySelector("#add")!; 
@@ -10,15 +43,27 @@ addButton.addEventListener("click", addTaskToToDoList);
 function addTaskToToDoList(): void {
     if(task.value.length > 0) {
         let newTask = document.createElement("li");
-
-        let checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.className = "todo-check";
-        checkbox.addEventListener("click", tickDoneOnToDoList);
-        newTask.appendChild(checkbox);
-
         let finalTask = document.createElement("label");
-        finalTask.appendChild(document.createTextNode(task.value));
+
+        let taskToBeAdded; 
+
+        if(isCat(task.value)) {
+            taskToBeAdded = new CatTask(task.value, "https://breakbrunch.com/wp-content/uploads/2019/06/cute-cat-with-big-eyes-041619-1.jpg");
+            var img = document.createElement("img");
+            img.src = taskToBeAdded.url;
+            img.height = 30;
+            img.width = 30;
+            newTask.appendChild(img); 
+        } else {
+            taskToBeAdded = new NormalTask(task.value, false); 
+            let checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.className = "todo-check";
+            checkbox.addEventListener("click", tickDoneOnToDoList);
+            newTask.appendChild(checkbox);
+        }
+        
+        finalTask.appendChild(document.createTextNode(taskToBeAdded.text));
         finalTask.className = "todo";
         newTask.appendChild(finalTask);
 

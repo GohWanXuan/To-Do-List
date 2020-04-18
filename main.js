@@ -1,3 +1,46 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+// CLASSES
+var Task = /** @class */ (function () {
+    function Task(text) {
+        this.text = text;
+    }
+    return Task;
+}());
+var NormalTask = /** @class */ (function (_super) {
+    __extends(NormalTask, _super);
+    function NormalTask(text, checkbox) {
+        var _this = _super.call(this, text) || this;
+        _this.checkbox = checkbox;
+        return _this;
+    }
+    return NormalTask;
+}(Task));
+var CatTask = /** @class */ (function (_super) {
+    __extends(CatTask, _super);
+    function CatTask(text, url) {
+        var _this = _super.call(this, text) || this;
+        _this.url = url;
+        return _this;
+    }
+    return CatTask;
+}(Task));
+// CHECK IF TASK HAS "cat"
+function isCat(text) {
+    text = text.toLowerCase();
+    return text.indexOf("cat") != -1;
+}
 // ADD BUTTON EVENT LISTENER 
 var todoList = document.querySelector("#todo-list");
 var addButton = document.querySelector("#add");
@@ -8,13 +51,25 @@ addButton.addEventListener("click", addTaskToToDoList);
 function addTaskToToDoList() {
     if (task.value.length > 0) {
         var newTask = document.createElement("li");
-        var checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.className = "todo-check";
-        checkbox.addEventListener("click", tickDoneOnToDoList);
-        newTask.appendChild(checkbox);
         var finalTask = document.createElement("label");
-        finalTask.appendChild(document.createTextNode(task.value));
+        var taskToBeAdded = void 0;
+        if (isCat(task.value)) {
+            taskToBeAdded = new CatTask(task.value, "https://breakbrunch.com/wp-content/uploads/2019/06/cute-cat-with-big-eyes-041619-1.jpg");
+            var img = document.createElement("img");
+            img.src = taskToBeAdded.url;
+            img.height = 30;
+            img.width = 30;
+            newTask.appendChild(img);
+        }
+        else {
+            taskToBeAdded = new NormalTask(task.value, false);
+            var checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.className = "todo-check";
+            checkbox.addEventListener("click", tickDoneOnToDoList);
+            newTask.appendChild(checkbox);
+        }
+        finalTask.appendChild(document.createTextNode(taskToBeAdded.text));
         finalTask.className = "todo";
         newTask.appendChild(finalTask);
         var newDeleteButton = document.createElement("button");
